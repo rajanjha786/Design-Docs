@@ -1,0 +1,50 @@
+
+## Command to run the catalog service
+
+docker run -d ^
+ --name catalog-service ^
+ --net catalog-network ^
+ -p 8000:8000 ^
+ -e SPRING_DATASOURCE_URL=jdbc:postgresql://polar-postgres:5432/polardb_catalog ^
+ -e POLAR_TESTDATA_ENABLED=true ^
+ catalog-service
+ 
+## Command to run the postgres server in a container
+docker run -d ^
+    --name polar-postgres ^
+    --net catalog-network ^
+    -e POSTGRES_USER=user ^
+    -e POSTGRES_PASSWORD=password ^
+    -e POSTGRES_DB=polardb_catalog ^
+    -p 5432:5432 ^
+    postgres:14.4
+ 
+## build image using cloud native build pack catalog-service
+gradlew bootBuildImage ^
+ --imageName ghcr.io/rajanjha786/catalog-service ^
+ --publishImage ^
+ -PregistryUrl=ghcr.io ^
+ -PregistryUsername=rajanjha786 ^
+ -PregistryToken=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
+ 
+## build image using cloud native build pack catalog-service
+gradlew bootBuildImage ^
+ --imageName ghcr.io/rajanjha786/config-service 
+ 
+ #--publishImage ^
+ #-PregistryUrl=ghcr.io ^
+ #-PregistryUsername=rajanjha786 ^
+ #-PregistryToken=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
+ 
+ 
+Create Book In Catalog
+http POST :9000/books author="Jon Snow" title="All I don't know about Arctic" isbn="1234567897" price=9.90 publisher="ABC"
+
+Get All Books from catalog
+http :9000/books
+
+Order Book
+http POST :9000/orders isbn=1234567897 quantity=3
+
+Get Orders
+http :9000/orders
