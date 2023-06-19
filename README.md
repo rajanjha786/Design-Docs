@@ -98,6 +98,98 @@ class Customer,Employee person
 
 ```
 
+## Sequence Diagram of Buying a Book Flow Happy Path
+
+```mermaid
+---
+title: Buying Book Flow Happy Path
+---
+
+sequenceDiagram
+    actor C as Customer
+    participant ES as Edge Service
+    participant OS as Order Service
+    participant CS as Catalog Service
+    participant DS as Dispatcher Service
+    
+    C ->> ES: POST /orders
+    activate ES
+    ES ->> OS: POST /orders
+    activate OS
+    OS ->> CS: Check if Book Exist GET /book/{isbn}
+    activate CS
+    CS -->> OS: Book Exist
+    deactivate CS
+    OS --)  DS: Order Accepted Event Published
+    OS -->> ES: Order Accepted
+    deactivate OS
+    ES -->>C: Order Accepted
+    deactivate ES
+
+    activate DS
+    DS --) DS: Order Packed and Dispatched
+    DS --) OS: Order Dispatched Event Published
+    deactivate DS
+    activate OS
+    OS --) OS: Order Status Updated To Dispatched
+    deactivate OS
+      
+    
+```
+
+## Sequence Diagram of Buying a Book Flow When Ordered Book Does not exist in the Catalog
+
+```mermaid
+---
+title: Buying Book Flow When Ordered Book Does not exist in the Catalog
+---
+
+sequenceDiagram
+    actor C as Customer
+    participant ES as Edge Service
+    participant OS as Order Service
+    participant CS as Catalog Service
+    participant DS as Dispatcher Service
+    
+    C ->> ES: POST /orders
+    activate ES
+    ES ->> OS: POST /orders
+    activate OS
+    OS ->> CS: Check if Book Exist GET /book/{isbn}
+    activate CS
+    CS -->> OS: Book Does Not Exist
+    deactivate CS
+    OS -->> ES: Order Rejected
+    deactivate OS
+    ES -->>C: Order Rejected
+    deactivate ES
+      
+    
+```
+
+## Sequence Diagram of Adding a Book in the catalog
+
+```mermaid
+---
+title: Adding a Book in the catalog
+---
+
+sequenceDiagram
+    actor E as Employee
+    participant ES as Edge Service
+    participant CS as Catalog Service
+    
+    E ->> ES: POST /books
+    activate ES
+    ES ->> CS: POST /books
+    activate CS
+    CS -->> ES: Book Created
+    deactivate CS
+    ES -->> E: Book Created
+    deactivate ES
+    
+```
+
 ## Logging Architecture of Bookshop Application
 
 ```mermaid
