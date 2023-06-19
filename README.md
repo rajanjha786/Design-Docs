@@ -111,8 +111,9 @@ sequenceDiagram
     participant OS as Order Service
     participant CS as Catalog Service
     participant DS as Dispatcher Service
-    
+
     C ->> ES: POST /orders
+    activate C
     activate ES
     ES ->> OS: POST /orders
     activate OS
@@ -125,6 +126,7 @@ sequenceDiagram
     deactivate OS
     ES -->>C: Order Accepted
     deactivate ES
+    deactivate C
 
     activate DS
     DS --) DS: Order Packed and Dispatched
@@ -152,6 +154,7 @@ sequenceDiagram
     participant DS as Dispatcher Service
     
     C ->> ES: POST /orders
+    activate C
     activate ES
     ES ->> OS: POST /orders
     activate OS
@@ -163,6 +166,7 @@ sequenceDiagram
     deactivate OS
     ES -->>C: Order Rejected
     deactivate ES
+    deactivate C
       
     
 ```
@@ -180,6 +184,7 @@ sequenceDiagram
     participant CS as Catalog Service
     
     E ->> ES: POST /books
+    activate E
     activate ES
     ES ->> CS: POST /books
     activate CS
@@ -187,6 +192,7 @@ sequenceDiagram
     deactivate CS
     ES -->> E: Book Created
     deactivate ES
+    deactivate E
     
 ```
 
