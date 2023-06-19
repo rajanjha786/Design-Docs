@@ -25,7 +25,7 @@ gradlew bootBuildImage ^
  --publishImage ^
  -PregistryUrl=ghcr.io ^
  -PregistryUsername=rajanjha786 ^
- -PregistryToken=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
+ -PregistryToken=
  
 ## build image using cloud native build pack catalog-service
 gradlew bootBuildImage ^
@@ -34,7 +34,7 @@ gradlew bootBuildImage ^
  #--publishImage ^
  #-PregistryUrl=ghcr.io ^
  #-PregistryUsername=rajanjha786 ^
- #-PregistryToken=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
+ #-PregistryToken=
  
  
 Create Book In Catalog
@@ -48,3 +48,10 @@ http POST :9000/orders isbn=1234567897 quantity=3
 
 Get Orders
 http :9000/orders
+
+Open grafana at
+http://localhost:3000
+Goto Explore and search for container_name /catalog-service
+
+liveness state: 
+readiness state

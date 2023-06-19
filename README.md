@@ -97,3 +97,86 @@ class Customer,Employee person
 
 
 ```
+
+## Logging Architecture of Bookshop Application
+
+```mermaid
+---
+title: Bookshop Logging Architecture
+---
+
+flowchart
+    
+App["Applications
+[Containers]
+"]
+
+FB["Fluent Bit
+[Container]
+Collects, processes, and forwards logs"]
+
+Loki["Loki
+[Container]
+Log aggregation system"]
+
+GF["Grafana
+[Container]
+Platform for querying, visualizing, and alerting on metrics, logs, and traces"]
+
+GF -- "Queries logs from" --> Loki
+FB --"Forwards logs to" --> Loki
+FB --"Fetches logs from" --> App
+```
+
+## Monitoring Architecture of Bookshop Application
+
+```mermaid
+---
+title: Bookshop Monitoring Architecture
+---
+flowchart
+    
+GF["Grafana
+[Container]
+Platform for querying, visualizing, and alerting on metrics, logs, and traces"]
+
+App["Applications
+[Containers]
+"]
+
+P["Prometheus
+[Containers]
+Monitoring System
+"]
+
+P --"Scrapes metrics from" --> App
+GF --"Queries metrics from" --> P
+
+```
+
+## Distributed Tracing Architecture
+
+```mermaid
+---
+title: Bookshop Distributed Tracking Architecture
+---
+
+flowchart
+
+GF["Grafana
+[Container]
+Platform for querying, visualizing, and alerting on metrics, logs, and traces"]
+
+App["Applications
+[Containers]
+"]
+
+T["Tempo
+[Container]
+Distributed Tracking System"]
+
+GF-- "Queries traces from" --> T
+App-- "Sends traces to" --> T
+    
+```
+
