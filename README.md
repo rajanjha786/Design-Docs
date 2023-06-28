@@ -278,3 +278,29 @@ App-- "Sends traces to" --> T
     
 ```
 
+```mermaid
+---
+title: Business Context Diagram
+---
+
+flowchart
+    App((Online Book Shop))
+    E[Employee]
+    C[Customer]
+    Catalog[|borders:tb|Catalog]
+    Order[|borders:tb|Order]
+
+
+    App-- "List Books" -->C
+C-- "Order Book Request" --> App
+App-- "Order Accepted" --> C
+
+App-- "List Books" -->E
+E-- "Update Book Catalog Request" -->App
+App-- "Updated Catalog" -->E
+
+App <-- "Order Details" --> Order
+App <-- "Book Details" --> Catalog
+
+```
+

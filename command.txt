@@ -44,7 +44,7 @@ Get All Books from catalog
 http :9000/books
 
 Order Book
-http POST :9000/orders isbn=1234567897 quantity=3
+http POST :9000/orders isbn=1234567891 quantity=3
 
 Get Orders
 http :9000/orders
@@ -55,3 +55,6 @@ Goto Explore and search for container_name /catalog-service
 
 liveness state: 
 readiness state
+
+
+kubectl port-forward service/catalog-service 8000:80 
