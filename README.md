@@ -278,6 +278,7 @@ App-- "Sends traces to" --> T
     
 ```
 
+## Business Context Diagram
 ```mermaid
 ---
 title: Business Context Diagram
